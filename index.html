@@ -358,46 +358,22 @@
         }
 
         .discord-box {
-            margin: 12px 0 15px 0;
-            padding: 3px;
-            background: #c0c0c0;
-            border-top: 2px solid #ffffff;
-            border-left: 2px solid #ffffff;
-            border-right: 2px solid #404040;
-            border-bottom: 2px solid #404040;
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.20);
-        }
-
-        .discord-titlebar {
-            padding: 5px 7px;
-            color: #ffffff;
-            background: #000080;
-            font-size: 12px;
-            font-weight: bold;
+            margin: 8px 0 12px 0;
+            padding: 4px 8px 2px 8px;
+            text-align: center;
+            background: #eeeeee;
         }
 
         .discord-body {
-            padding: 12px;
+            padding: 0;
             text-align: center;
             background: #eeeeee;
-            border-top: 2px solid #808080;
-            border-left: 2px solid #808080;
-            border-right: 2px solid #ffffff;
-            border-bottom: 2px solid #ffffff;
-        }
-
-        .discord-body strong {
-            display: block;
-            margin-bottom: 4px;
-            color: #800080;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 18px;
         }
 
         .discord-link {
             display: inline-block;
-            margin-top: 8px;
-            padding: 8px 18px;
+            margin: 0;
+            padding: 7px 18px;
             color: #ffffff !important;
             background: #000080;
             border-top: 2px solid #8080ff;
@@ -408,6 +384,7 @@
             font-size: 14px;
             font-weight: bold;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .discord-link:active {
@@ -417,21 +394,18 @@
             border-bottom: 2px solid #8080ff;
         }
 
-        .discord-link {
-            cursor: pointer;
-        }
-
         .discord-url-box {
             display: block;
-            width: 92%;
-            margin: 9px auto 0 auto;
-            padding: 5px 7px;
+            width: 100%;
+            height: 28px;
+            margin: 8px 0 0 0;
+            padding: 4px 7px;
             color: #000000;
             background: #ffffff;
             border-top: 2px solid #404040;
             border-left: 2px solid #404040;
-            border-right: 2px solid #ffffff;
-            border-bottom: 2px solid #ffffff;
+            border-right: 0;
+            border-bottom: 0;
             font-family: "Courier New", monospace;
             font-size: 12px;
             text-align: center;
@@ -439,11 +413,11 @@
 
         .discord-copy-status {
             display: block;
-            min-height: 18px;
-            margin-top: 6px;
+            min-height: 15px;
+            margin-top: 3px;
             color: #008000;
             font-family: "Courier New", monospace;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
         }
 
@@ -883,9 +857,9 @@
 
             if (copied) {
                 document.getElementById("discord-copy-button").innerHTML =
-                    "COPIED!!! NOW PASTE IN BROWSER XD";
+                    "COPIED!!! XD";
                 document.getElementById("discord-copy-status").innerHTML =
-                    "w00t! Discord invite copied to clipboard.";
+                    "w00t! copied — paste it into your browser.";
                 document.getElementById("browser-status").innerHTML =
                     "Discord invite copied - no game crash this time XD";
             } else {
@@ -1033,12 +1007,7 @@
                             </table>
 
                             <div class="discord-box">
-                                <div class="discord-titlebar">
-                                    RobbyMC's Epic Discord.exe
-                                </div>
                                 <div class="discord-body">
-                                    <strong>JOIN OUR DISCORD XD</strong>
-                                    Map suggestions, server updates, trash talk and other extremely important internet business.<br>
                                     <button
                                         id="discord-copy-button"
                                         class="discord-link"
