@@ -1,1 +1,1201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Counter-Strike: Source - Server Home Page</title>
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #008080;
+            color: #000000;
+            font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+
+        a:visited {
+            color: #551a8b;
+        }
+
+        .desktop-pattern {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(45deg, rgba(255,255,255,0.035) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,255,255,0.035) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.035) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.035) 75%);
+            background-size: 8px 8px;
+            background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+        }
+
+        .window {
+            width: 96%;
+            max-width: 1120px;
+            margin: 14px auto;
+            padding: 3px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.35);
+        }
+
+        .titlebar {
+            min-height: 28px;
+            padding: 5px 6px;
+            color: #ffffff;
+            font-weight: bold;
+            background: #000080;
+            overflow: hidden;
+        }
+
+        .title-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            color: #000000;
+            text-align: center;
+            line-height: 16px;
+            background: #ffff00;
+            border: 1px solid #ffffff;
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+        }
+
+        .window-controls {
+            float: right;
+            white-space: nowrap;
+        }
+
+        .window-control {
+            display: inline-block;
+            width: 20px;
+            height: 18px;
+            margin-left: 2px;
+            color: #000000;
+            text-align: center;
+            line-height: 15px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+        }
+
+        .menu-bar {
+            padding: 4px 7px;
+            background: #c0c0c0;
+            border-bottom: 1px solid #808080;
+        }
+
+        .menu-item {
+            display: inline-block;
+            margin-right: 18px;
+        }
+
+        .toolbar {
+            padding: 5px 6px;
+            background: #c0c0c0;
+            border-top: 1px solid #ffffff;
+            border-bottom: 1px solid #808080;
+        }
+
+        .tool-button,
+        .tab-button,
+        .start-button {
+            display: inline-block;
+            margin: 1px 2px 1px 0;
+            padding: 4px 9px;
+            color: #000000;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tool-button:active,
+        .tab-button.active,
+        .tab-button:active,
+        .start-button:active {
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            background: #b8b8b8;
+        }
+
+        .address-row {
+            padding: 5px 7px;
+            background: #c0c0c0;
+            border-bottom: 1px solid #808080;
+        }
+
+        .address-label {
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .address-box {
+            display: inline-block;
+            width: 79%;
+            min-height: 22px;
+            padding: 2px 5px;
+            vertical-align: middle;
+            background: #ffffff;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            font-family: "Courier New", monospace;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .browser-body {
+            margin: 0 3px;
+            min-height: 480px;
+            background: #ffffff;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        .marquee-strip {
+            padding: 4px 0;
+            color: #ffff00;
+            background: #000080;
+            border-bottom: 3px ridge #c0c0c0;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+        }
+
+        .site-header {
+            padding: 12px 12px 9px 12px;
+            text-align: center;
+            background: #000000;
+            border-bottom: 4px double #00ff00;
+        }
+
+        .site-header h1 {
+            margin: 0;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            font-size: 28px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #005500;
+        }
+
+        .rainbow-line {
+            margin: 5px auto;
+            max-width: 720px;
+            color: #ff00ff;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .tiny-web-text {
+            color: #ffffff;
+            font-family: "Times New Roman", serif;
+            font-size: 12px;
+        }
+
+        .navigation {
+            padding: 7px;
+            text-align: center;
+            background: #c0c0c0;
+            border-bottom: 2px groove #ffffff;
+        }
+
+        .tab-button {
+            min-width: 290px;
+            padding: 8px 18px;
+            font-size: 24px;
+        }
+
+        .page {
+            display: none;
+            min-height: 380px;
+            padding: 10px;
+            background: #ffffff;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .site-layout {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 8px;
+        }
+
+        .site-layout td {
+            vertical-align: top;
+        }
+
+        .ad-column {
+            width: 145px;
+        }
+
+        .content-column {
+            width: auto;
+        }
+
+        .page h2 {
+            margin: 0 0 10px 0;
+            padding: 4px 7px;
+            color: #ffffff;
+            background: #000080;
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            border-top: 2px solid #8080ff;
+            border-left: 2px solid #8080ff;
+            border-right: 2px solid #000040;
+            border-bottom: 2px solid #000040;
+        }
+
+        .page h3 {
+            margin: 13px 0 7px 0;
+            color: #800080;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 16px;
+        }
+
+        .terminal {
+            margin-bottom: 10px;
+            padding: 9px;
+            color: #00ff00;
+            background: #000000;
+            border: 3px inset #c0c0c0;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+        }
+
+        .terminal-prefix {
+            color: #ffff00;
+        }
+
+        .hot-text {
+            color: #ff0000;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-weight: bold;
+        }
+
+        .status-grid {
+            width: 100%;
+            margin: 9px 0 11px 0;
+            border-collapse: separate;
+            border-spacing: 5px;
+        }
+
+        .status-card {
+            width: 33%;
+            padding: 8px;
+            vertical-align: top;
+            background: #ffffcc;
+            border: 2px groove #c0c0c0;
+        }
+
+        .status-label {
+            display: block;
+            color: #800000;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status-value {
+            color: #000080;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .notice {
+            margin: 10px 0;
+            padding: 9px;
+            background: #ffffcc;
+            border: 3px double #ff0000;
+        }
+
+        .notice-title {
+            color: #ff0000;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .discord-box {
+            margin: 12px 0 15px 0;
+            padding: 3px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.20);
+        }
+
+        .discord-titlebar {
+            padding: 5px 7px;
+            color: #ffffff;
+            background: #000080;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .discord-body {
+            padding: 12px;
+            text-align: center;
+            background: #eeeeee;
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        .discord-body strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #800080;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 18px;
+        }
+
+        .discord-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 18px;
+            color: #ffffff !important;
+            background: #000080;
+            border-top: 2px solid #8080ff;
+            border-left: 2px solid #8080ff;
+            border-right: 2px solid #000040;
+            border-bottom: 2px solid #000040;
+            font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .discord-link:active {
+            border-top: 2px solid #000040;
+            border-left: 2px solid #000040;
+            border-right: 2px solid #8080ff;
+            border-bottom: 2px solid #8080ff;
+        }
+
+        .command-table,
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border: 3px ridge #c0c0c0;
+        }
+
+        .command-table th,
+        .leaderboard-table th {
+            padding: 6px;
+            text-align: left;
+            color: #ffffff;
+            background: #000080;
+            border: 1px solid #ffffff;
+        }
+
+        .command-table td,
+        .leaderboard-table td {
+            padding: 6px;
+            border: 1px solid #808080;
+        }
+
+        .command-table tr:nth-child(even) td,
+        .leaderboard-table tr:nth-child(even) td {
+            background: #e8e8e8;
+        }
+
+        .command {
+            color: #0000ff;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .rank {
+            width: 55px;
+            color: #ff0000;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .map-group {
+            margin-bottom: 10px;
+            padding: 3px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+        }
+
+        .map-group-title {
+            padding: 4px 6px;
+            color: #ffffff;
+            background: #800080;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-weight: bold;
+        }
+
+        .map-group-body {
+            padding: 7px;
+            background: #ffffff;
+        }
+
+        .map-tag {
+            display: inline-block;
+            margin: 3px;
+            padding: 4px 7px;
+            color: #000080;
+            background: #ffffcc;
+            border: 2px outset #c0c0c0;
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .ad-popup {
+            margin-bottom: 10px;
+            padding: 3px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.22);
+        }
+
+        .ad-titlebar {
+            padding: 3px 4px;
+            color: #ffffff;
+            background: #000080;
+            font-size: 10px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .ad-close {
+            float: right;
+            width: 15px;
+            height: 14px;
+            color: #000000;
+            text-align: center;
+            line-height: 11px;
+            background: #c0c0c0;
+            border-top: 1px solid #ffffff;
+            border-left: 1px solid #ffffff;
+            border-right: 1px solid #404040;
+            border-bottom: 1px solid #404040;
+        }
+
+        .ad-body {
+            padding: 8px 6px;
+            text-align: center;
+            background: #ffffff;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 11px;
+        }
+
+        .ad-body strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #ff0000;
+            font-size: 14px;
+        }
+
+        .ad-body .ad-big {
+            color: #0000ff;
+            font-family: "Impact", "Arial Black", sans-serif;
+            font-size: 17px;
+            line-height: 1.05;
+        }
+
+        .ad-button {
+            display: inline-block;
+            margin-top: 7px;
+            padding: 4px 6px;
+            color: #000000;
+            background: #ffff00;
+            border: 2px outset #c0c0c0;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .ad-warning {
+            color: #ffff00;
+            background: #ff0000;
+        }
+
+        .ad-dark {
+            color: #00ff00;
+            background: #000000;
+            font-family: "Courier New", monospace;
+        }
+
+        .culture-line {
+            margin: 10px 0 2px 0;
+            padding: 7px;
+            color: #ffffff;
+            text-align: center;
+            background: #000080;
+            border: 4px ridge #c0c0c0;
+            font-family: "Courier New", monospace;
+        }
+
+        .culture-line strong {
+            color: #ffff00;
+        }
+
+        .footer-web {
+            padding: 10px 8px;
+            text-align: center;
+            font-family: "Times New Roman", serif;
+            font-size: 12px;
+        }
+
+        .web-badge {
+            display: inline-block;
+            margin: 3px;
+            padding: 3px 6px;
+            color: #ffffff;
+            background: #000000;
+            border: 2px outset #c0c0c0;
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+        }
+
+        .small-print {
+            color: #666666;
+            font-size: 10px;
+        }
+
+        .status-bar {
+            margin-top: 3px;
+            padding: 4px;
+            background: #c0c0c0;
+            overflow: hidden;
+        }
+
+        .status-section {
+            display: inline-block;
+            min-height: 22px;
+            padding: 3px 7px;
+            vertical-align: top;
+            background: #c0c0c0;
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        .status-main {
+            width: 68%;
+        }
+
+        .status-zone {
+            width: 20%;
+            text-align: center;
+        }
+
+        .status-load {
+            width: 10%;
+            text-align: center;
+        }
+
+        .taskbar {
+            margin-top: 3px;
+            padding: 3px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            overflow: hidden;
+        }
+
+        .start-button {
+            padding: 4px 9px;
+        }
+
+        .task-button {
+            display: inline-block;
+            width: 190px;
+            margin-left: 5px;
+            padding: 4px 7px;
+            background: #e0e0e0;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            font-weight: bold;
+        }
+
+        .clock {
+            float: right;
+            min-width: 70px;
+            padding: 5px 7px;
+            text-align: center;
+            background: #c0c0c0;
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        @media screen and (max-width: 860px) {
+            .ad-column {
+                display: none;
+            }
+
+            .address-box {
+                width: 70%;
+            }
+        }
+
+        @media screen and (max-width: 610px) {
+            .site-header h1 {
+                font-size: 21px;
+            }
+
+            .toolbar {
+                display: none;
+            }
+
+            .address-box {
+                width: 62%;
+            }
+
+            .status-card {
+                display: block;
+                width: 100%;
+                margin-bottom: 4px;
+            }
+
+            .status-zone,
+            .status-load {
+                display: none;
+            }
+
+            .status-main {
+                width: 98%;
+            }
+        }
+    </style>
+
+    <script type="text/javascript">
+        function showTab(tabId, button, addressText) {
+            var pageIds = ["home-page", "leaders-page", "ranks-page"];
+            var buttonIds = ["home-button", "leaders-button", "ranks-button"];
+            var i;
+
+            for (i = 0; i < pageIds.length; i++) {
+                document.getElementById(pageIds[i]).className = "page";
+            }
+
+            for (i = 0; i < buttonIds.length; i++) {
+                document.getElementById(buttonIds[i]).className = "tab-button";
+            }
+
+            document.getElementById(tabId).className = "page active";
+            button.className = "tab-button active";
+            document.getElementById("address-box").innerHTML = addressText;
+            document.getElementById("browser-status").innerHTML = "Done - w00t! page loaded successfully XD";
+        }
+
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var suffix = "AM";
+
+            if (hours >= 12) {
+                suffix = "PM";
+            }
+
+            if (hours === 0) {
+                hours = 12;
+            } else if (hours > 12) {
+                hours = hours - 12;
+            }
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+
+            document.getElementById("clock").innerHTML = hours + ":" + minutes + " " + suffix;
+        }
+
+        function loadLeaderboard() {
+            var request;
+
+            if (!window.XMLHttpRequest) {
+                return;
+            }
+
+            request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                var data;
+                var rows;
+                var i;
+                var player;
+                var html = "";
+
+                if (request.readyState === 4 && request.status === 200) {
+                    try {
+                        data = JSON.parse(request.responseText);
+                        rows = data.players || [];
+
+                        if (rows.length === 0) {
+                            return;
+                        }
+
+                        for (i = 0; i < rows.length; i++) {
+                            player = rows[i];
+                            html += "<tr>";
+                            html += "<td class='rank'>" + padRank(player.rank || (i + 1)) + "</td>";
+                            html += "<td>" + escapeHtml(player.name || "Unknown Player") + "</td>";
+                            html += "<td>" + escapeHtml(String(player.wins || 0)) + "</td>";
+                            html += "<td>" + escapeHtml(String(player.kills || 0)) + "</td>";
+                            html += "</tr>";
+                        }
+
+                        document.getElementById("leaderboard-body").innerHTML = html;
+
+                        if (data.updated) {
+                            document.getElementById("leaderboard-updated").innerHTML = escapeHtml(String(data.updated));
+                        }
+                    } catch (error) {
+                        document.getElementById("leaderboard-note").innerHTML =
+                            "leaderboard.json was found but got totally rekt while loading :-(";
+                    }
+                }
+            };
+
+            request.open("GET", "leaderboard.json?nocache=" + new Date().getTime(), true);
+            request.send(null);
+        }
+
+        function padRank(rank) {
+            rank = String(rank);
+            return rank.length < 2 ? "0" + rank : rank;
+        }
+
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function initPage() {
+            updateClock();
+            window.setInterval(updateClock, 30000);
+            loadLeaderboard();
+        }
+    </script>
+</head>
+
+<body onload="initPage();">
+    <div class="desktop-pattern"></div>
+
+    <div class="window">
+        <div class="titlebar">
+            <span class="title-icon">CS</span>
+            Counter-Strike: Source Server - Microsoft Internet Explorer
+
+            <span class="window-controls">
+                <span class="window-control">_</span>
+                <span class="window-control">□</span>
+                <span class="window-control">X</span>
+            </span>
+        </div>
+
+        <div class="menu-bar">
+            <span class="menu-item"><u>F</u>ile</span>
+            <span class="menu-item"><u>E</u>dit</span>
+            <span class="menu-item"><u>V</u>iew</span>
+            <span class="menu-item"><u>F</u>avorites</span>
+            <span class="menu-item"><u>H</u>elp</span>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-button" type="button">&lt; Back</button>
+            <button class="tool-button" type="button">Forward &gt;</button>
+            <button class="tool-button" type="button">Stop</button>
+            <button class="tool-button" type="button">Refresh</button>
+            <button class="tool-button" type="button">Home</button>
+        </div>
+
+        <div class="address-row">
+            <span class="address-label">Address:</span>
+            <span id="address-box" class="address-box">css://server/home.htm</span>
+            <button class="tool-button" type="button">Go</button>
+        </div>
+
+        <div class="browser-body">
+            <div class="marquee-strip">
+                <marquee scrollamount="5">
+                    *** WELCOME 2 THE SERVER XD *** GUNGAME ONLINE *** GL HF *** KNIFE KILL = MAXIMUM w00t ***
+                </marquee>
+            </div>
+
+            <div class="site-header">
+                <div class="tiny-web-text">-= [ CONNECTION ESTABLISHED ] =-</div>
+                <h1>RobbyMC's Epic GunGame DM [QLD , BOTS , 420]</h1>
+                <div class="rainbow-line">~*~ OG maps, custom gun ladders, XP and ranks, noobs welcome XD ~*~</div>
+            </div>
+
+            <div class="navigation">
+                <button
+                    id="home-button"
+                    class="tab-button active"
+                    type="button"
+                    onclick="showTab('home-page', this, 'css://server/home.htm');">
+                    HOME XD
+                </button>
+
+                <button
+                    id="leaders-button"
+                    class="tab-button"
+                    type="button"
+                    onclick="showTab('leaders-page', this, 'css://server/l33derboard.htm');">
+                    L33DERBOARD
+                </button>
+
+
+                <button
+                    id="ranks-button"
+                    class="tab-button"
+                    type="button"
+                    onclick="showTab('ranks-page', this, 'css://server/ranks.htm');">
+                    RANKS
+                </button>
+            </div>
+
+            <!-- HOME -->
+            <div id="home-page" class="page active">
+                <table class="site-layout">
+                    <tr>
+                        <td class="ad-column">
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">CONGRATULATIONS! <span class="ad-close">X</span></div>
+                                <div class="ad-body">
+                                    <strong>YOU WON!!!</strong>
+                                    You are visitor<br>
+                                    <span class="ad-big">#1337</span><br>
+                                    Claim your FREE imaginary AWP skin now!!!
+                                    <span class="ad-button">CLICK HERE XD</span>
+                                </div>
+                            </div>
+
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">56K TURBO BOOST <span class="ad-close">X</span></div>
+                                <div class="ad-body ad-dark">
+                                    <span class="ad-big">LOW PING?</span><br><br>
+                                    Download more internet and reduce lag by 9000%*
+                                    <span class="ad-button">INSTALL.EXE</span><br><br>
+                                    <small>*probably not lol</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="content-column">
+                            <h2>Welcome.htm - U R Connected!</h2>
+
+                            <table class="status-grid">
+                                <tr>
+                                    <td class="status-card">
+                                        <span class="status-label">PRIMARY MODE</span>
+                                        <span class="status-value">GUNGAME</span>
+                                    </td>
+                                    <td class="status-card">
+                                        <span class="status-label">WEAPONS</span>
+                                        <span class="status-value">STICKY NADES & THROW KNIFE</span>
+                                    </td>
+                                    <td class="status-card">
+                                        <span class="status-label">SERVER REGION</span>
+                                        <span class="status-value">QLD / AUS</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="discord-box">
+                                <div class="discord-titlebar">
+                                    RobbyMC's Epic Discord.exe
+                                </div>
+                                <div class="discord-body">
+                                    <strong>JOIN OUR DISCORD XD</strong>
+                                    Map suggestions, server updates, trash talk and other extremely important internet business.<br>
+                                    <a class="discord-link" href="https://discord.gg/dpWUyay8rB" target="_blank">
+                                        CLICK HERE 2 JOIN!!!
+                                    </a>
+                                </div>
+                            </div>
+
+                            <h3>&gt;&gt; COMMANDZ</h3>
+
+                            <table class="command-table">
+                                <tr>
+                                    <th>COMMAND</th>
+                                    <th>WHAT IT DO</th>
+                                </tr>
+                                <tr>
+                                    <td class="command">!gunvote</td>
+                                    <td>weapon order vote</td>
+                                </tr>
+                                <tr>
+                                    <td class="command">!lvl</td>
+                                    <td>levels and ranks menu</td>
+                                </tr>
+                                <tr>
+                                    <td class="command">!rtv</td>
+                                    <td>rock the vote when the map sucks.</td>
+                                </tr>
+                                <tr>
+                                    <td class="command">!nominate</td>
+                                    <td>nominate a map for the next vote.</td>
+                                </tr>
+                                <tr>
+                                    <td class="command">!quake</td>
+                                    <td>quake sound settings</td>
+                                </tr>
+                                <tr>
+                                    <td class="command">!revote</td>
+                                    <td>change vote while vote is open</td>
+                                </tr>
+                            </table>
+
+                            <h3>&gt;&gt; MAP ROTATION</h3>
+
+                            <div class="map-group">
+                                <div class="map-group-title">MY FAVES + CLASSIC MAPS <3 (SUGGEST NEW MAPS IN OUR DISCORD) xD</div>
+                                <div class="map-group-body">
+                                    <span class="map-tag">gg_fy_iceworld_arena</span>
+                                    <span class="map-tag">gg_aim_shotty</span>
+                                    <span class="map-tag">fy_pool_day_reloaded</span>
+                                    <span class="map-tag">gg_nuketown</span>
+                                    <span class="map-tag">gg_blue_arena</span>
+                                    <span class="map-tag">gg_trs_aim_churches</span>
+                                    <span class="map-tag">gg_castle_wars</span>
+                                    <span class="map-tag">fy_deathchamber</span>
+                                    <span class="map-tag">gg_hellokitty_b1</span>
+                                    <span class="map-tag">gg_lego_arena</span>
+                                    <span class="map-tag">fy_IceworlD_textured</span>
+                                    <span class="map-tag">gg_ultimate_funtimes</span>
+                                </div>
+                            </div>
+
+                        <div class="terminal">
+                            <span class="terminal-prefix">C:\CSSERVER&gt;</span> connect player.exe<br>
+                            <span class="terminal-prefix">SERVER:</span> GunGame Modes As Follows<br>
+                            <span class="terminal-prefix">SERVER:</span> 1. Classic Progression 23 levels (default)<br>
+                            <span class="terminal-prefix">SERVER:</span> 2. Streamlined 10 Levels<br>
+                            <span class="terminal-prefix">SERVER:</span> 3. Close Quarters 15 levels<br>
+                            <span class="terminal-prefix">SERVER:</span> 4. Heavy Weapons 10 levels<br>
+                            <span class="terminal-prefix">SERVER:</span> 5. Snipers 6 Levels</strong>
+                         </div>
+
+                        </td>
+
+                        <td class="ad-column">
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">SECURITY WARNING <span class="ad-close">X</span></div>
+                                <div class="ad-body ad-warning">
+                                    <strong>YOUR PING MAY BE INFECTED!</strong>
+                                    47 suspicious noobs detected in your connection.
+                                    <span class="ad-button">FIX PING NOW</span>
+                                </div>
+                            </div>
+
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">LOCAL CLAN FINDER <span class="ad-close">X</span></div>
+                                <div class="ad-body">
+                                    <span class="ad-big">HOT CLANS</span><br>
+                                    in your area are looking for members!!!<br><br>
+                                    Requirements:<br>
+                                    • own headset<br>
+                                    • say "rush B"<br>
+                                    • tolerate dial-up
+                                    <span class="ad-button">JOIN NOW!!!</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- LEADERBOARD -->
+            <div id="leaders-page" class="page">
+                <table class="site-layout">
+                    <tr>
+                        <td class="ad-column">
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">FREE RANK BOOST <span class="ad-close">X</span></div>
+                                <div class="ad-body">
+                                    <strong>STUCK AT #42?</strong>
+                                    Enter your password here for absolutely no reason.
+                                    <span class="ad-button">TRUST ME BRO</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="content-column">
+                            <h2>L33derboard.htm - Top Internet Warriors</h2>
+
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th class="rank">RANK</th>
+                                        <th>PLAYER</th>
+                                        <th>WINS</th>
+                                        <th>KILLS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboard-body">
+                                    <tr>
+                                        <td class="rank">01</td>
+                                        <td>Awaiting player data...</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="rank">02</td>
+                                        <td>Awaiting player data...</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="rank">03</td>
+                                        <td>Awaiting player data...</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="rank">04</td>
+                                        <td>Awaiting player data...</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="rank">05</td>
+                                        <td>Awaiting player data...</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        <td class="ad-column">
+                            <div class="ad-popup">
+                                <div class="ad-titlebar">NEW MESSAGE!!! <span class="ad-close">X</span></div>
+                                <div class="ad-body ad-dark">
+                                    xX_Sn1p3r_Boi_Xx says:<br><br>
+                                    "1v1 me iceworld noob XD"
+                                    <span class="ad-button">ACCEPT DUEL</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- RANKS -->
+            <div id="ranks-page" class="page">
+                <h2>Ranks.htm - XP Rank Progression</h2>
+
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th class="rank">#</th>
+                            <th>NAME</th>
+                            <th>XP NEEDED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="rank">01</td><td>Noob I</td><td>0 (starting)</td></tr>
+                        <tr><td class="rank">02</td><td>Noob II</td><td>10</td></tr>
+                        <tr><td class="rank">03</td><td>Newb III</td><td>25</td></tr>
+                        <tr><td class="rank">04</td><td>Newb IV</td><td>50</td></tr>
+                        <tr><td class="rank">05</td><td>Big Popa Elite</td><td>75</td></tr>
+                        <tr><td class="rank">06</td><td>Big Popa Master</td><td>100</td></tr>
+                        <tr><td class="rank">07</td><td>Snoop Dog I</td><td>150</td></tr>
+                        <tr><td class="rank">08</td><td>Snoop Dog II</td><td>200</td></tr>
+                        <tr><td class="rank">09</td><td>Snoop Dog III</td><td>300</td></tr>
+                        <tr><td class="rank">10</td><td>Snoop Lion Master</td><td>500</td></tr>
+                        <tr><td class="rank">11</td><td>Master Baiter I</td><td>750</td></tr>
+                        <tr><td class="rank">12</td><td>Master Baiter II</td><td>1000</td></tr>
+                        <tr><td class="rank">13</td><td>Master Baiter Elite</td><td>1500</td></tr>
+                        <tr><td class="rank">14</td><td>Distinguished Master Baiter</td><td>2000</td></tr>
+                        <tr><td class="rank">15</td><td>Legend</td><td>3000</td></tr>
+                        <tr><td class="rank">16</td><td>Chief Big Nuts</td><td>5000</td></tr>
+                        <tr><td class="rank">17</td><td>Brock Lesnar</td><td>7500</td></tr>
+                        <tr><td class="rank">18</td><td>Undertaker</td><td>10000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footer-web">
+                <span class="hot-text">~*~ THANX 4 VISITING!!! ~*~</span><br>
+                <span class="web-badge">MADE WITH NOTEPAD</span>
+                <span class="web-badge">Y2K COMPLIANT</span><br><br>
+                </span>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <span id="browser-status" class="status-section status-main">Done - home.htm loaded successfully XD</span>
+            <span class="status-section status-zone">Internet zone</span>
+            <span class="status-section status-load">100%</span>
+        </div>
+
+        <div class="taskbar">
+            <button class="start-button" type="button">Start</button>
+            <span class="task-button">Counter-Strike: Source</span>
+            <span id="clock" class="clock">4:20 PM</span>
+        </div>
+    </div>
+</body>
+</html>
 
