@@ -806,7 +806,10 @@
                         document.getElementById("leaderboard-body").innerHTML = html;
 
                         if (data.updated) {
-                            document.getElementById("leaderboard-updated").innerHTML = escapeHtml(String(data.updated));
+                            var updatedEl = document.getElementById("leaderboard-updated");
+                            if (updatedEl) {
+                                updatedEl.innerHTML = escapeHtml(String(data.updated));
+                            }
                         }
                     } catch (error) {
                         document.getElementById("leaderboard-note").innerHTML =
@@ -1136,6 +1139,7 @@
 
                         <td class="content-column">
                             <h2>L33derboard.htm - Top Internet Warriors</h2>
+                            <p id="leaderboard-updated">Awaiting leaderboard.json sync...</p>
 
                             <table class="leaderboard-table">
                                 <thead>
