@@ -417,6 +417,36 @@
             border-bottom: 2px solid #8080ff;
         }
 
+        .discord-link {
+            cursor: pointer;
+        }
+
+        .discord-url-box {
+            display: block;
+            width: 92%;
+            margin: 9px auto 0 auto;
+            padding: 5px 7px;
+            color: #000000;
+            background: #ffffff;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .discord-copy-status {
+            display: block;
+            min-height: 18px;
+            margin-top: 6px;
+            color: #008000;
+            font-family: "Courier New", monospace;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
         .command-table,
         .leaderboard-table {
             width: 100%;
@@ -829,6 +859,47 @@
                 .replace(/'/g, "&#039;");
         }
 
+        function copyDiscordLink() {
+            var link = document.getElementById("discord-url").value;
+            var temporaryBox = document.createElement("textarea");
+            var copied = false;
+
+            temporaryBox.value = link;
+            temporaryBox.setAttribute("readonly", "readonly");
+            temporaryBox.style.position = "fixed";
+            temporaryBox.style.left = "-9999px";
+            temporaryBox.style.top = "0";
+            document.body.appendChild(temporaryBox);
+            temporaryBox.focus();
+            temporaryBox.select();
+
+            try {
+                copied = document.execCommand("copy");
+            } catch (error) {
+                copied = false;
+            }
+
+            document.body.removeChild(temporaryBox);
+
+            if (copied) {
+                document.getElementById("discord-copy-button").innerHTML =
+                    "COPIED!!! NOW PASTE IN BROWSER XD";
+                document.getElementById("discord-copy-status").innerHTML =
+                    "w00t! Discord invite copied to clipboard.";
+                document.getElementById("browser-status").innerHTML =
+                    "Discord invite copied - no game crash this time XD";
+            } else {
+                document.getElementById("discord-url").focus();
+                document.getElementById("discord-url").select();
+                document.getElementById("discord-copy-status").innerHTML =
+                    "Auto-copy was blocked. The link is selected - press Ctrl+C.";
+                document.getElementById("browser-status").innerHTML =
+                    "Copy blocked - press Ctrl+C on the selected Discord link.";
+            }
+
+            return false;
+        }
+
         function initPage() {
             updateClock();
             window.setInterval(updateClock, 30000);
@@ -968,9 +1039,22 @@
                                 <div class="discord-body">
                                     <strong>JOIN OUR DISCORD XD</strong>
                                     Map suggestions, server updates, trash talk and other extremely important internet business.<br>
-                                    <a class="discord-link" href="https://discord.gg/dpWUyay8rB" target="_blank">
-                                        CLICK HERE 2 JOIN!!!
-                                    </a>
+                                    <button
+                                        id="discord-copy-button"
+                                        class="discord-link"
+                                        type="button"
+                                        onclick="copyDiscordLink();">
+                                        CLICK 2 COPY DISCORD LINK!!!
+                                    </button>
+                                    <input
+                                        id="discord-url"
+                                        class="discord-url-box"
+                                        type="text"
+                                        value="https://discord.gg/dpWUyay8rB"
+                                        readonly="readonly">
+                                    <span id="discord-copy-status" class="discord-copy-status">
+                                        Paste the copied link into your normal browser.
+                                    </span>
                                 </div>
                             </div>
 
@@ -1198,4 +1282,3 @@
     </div>
 </body>
 </html>
-
