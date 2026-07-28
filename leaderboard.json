@@ -1,11 +1,23 @@
 {
-  "updated": "26 Jul 2026 7:21 PM",
+  "updated": "28 Jul 2026 9:23 PM",
   "players": [
     {
       "rank": 1,
       "name": "ROBBYmc",
-      "wins": 61,
-      "kills": 472
+      "wins": 3,
+      "kills": 59
+    },
+    {
+      "rank": 2,
+      "name": "Envizionman",
+      "wins": 0,
+      "kills": 214
+    },
+    {
+      "rank": 3,
+      "name": "br.langoor64",
+      "wins": 0,
+      "kills": 2
     }
   ]
 }
