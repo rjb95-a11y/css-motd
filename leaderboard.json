@@ -1,29 +1,89 @@
 {
-  "updated": "29 Jul 2026 11:08 PM",
+  "updated": "2 Aug 2026 8:57 PM",
   "players": [
     {
       "rank": 1,
       "name": "ROBBYmc",
-      "wins": 63,
-      "kills": 249
+      "wins": 0,
+      "kills": 302
     },
     {
       "rank": 2,
+      "name": "Darkside00_",
+      "wins": 0,
+      "kills": 217
+    },
+    {
+      "rank": 3,
       "name": "Envizionman",
       "wins": 0,
       "kills": 214
     },
     {
-      "rank": 3,
+      "rank": 4,
+      "name": "Osky poo",
+      "wins": 0,
+      "kills": 78
+    },
+    {
+      "rank": 5,
       "name": "bogan prime",
       "wins": 0,
       "kills": 76
     },
     {
-      "rank": 4,
+      "rank": 6,
+      "name": "Void.",
+      "wins": 0,
+      "kills": 73
+    },
+    {
+      "rank": 7,
+      "name": "PrinceAzuru",
+      "wins": 0,
+      "kills": 70
+    },
+    {
+      "rank": 8,
+      "name": "bleachpop",
+      "wins": 0,
+      "kills": 68
+    },
+    {
+      "rank": 9,
+      "name": "drowZ",
+      "wins": 0,
+      "kills": 67
+    },
+    {
+      "rank": 10,
+      "name": "gauravdavesar0",
+      "wins": 0,
+      "kills": 53
+    },
+    {
+      "rank": 11,
+      "name": "bekuzavr",
+      "wins": 0,
+      "kills": 33
+    },
+    {
+      "rank": 12,
+      "name": "HeyBanDen",
+      "wins": 0,
+      "kills": 23
+    },
+    {
+      "rank": 13,
       "name": "br.langoor64",
       "wins": 0,
       "kills": 2
+    },
+    {
+      "rank": 14,
+      "name": "Alex",
+      "wins": 0,
+      "kills": 0
     }
   ]
 }
